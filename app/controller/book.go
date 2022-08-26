@@ -8,6 +8,7 @@ import (
 	"github.com/mimomomimo/web-service-gin/app/model"
 )
 
+//go:generate moq -fmt goimports -out mock.go . RepositoryInterface
 type RepositoryInterface interface {
 	FetchVolumes(url.Values) ([]model.Book, error)
 }
@@ -26,7 +27,7 @@ func (controller *Controller) GetBooks(c *gin.Context) {
 	params := c.Request.URL.Query()
 	books, err := controller.Repositry.FetchVolumes(params)
 	if err != nil {
-		// handle error
+		c.IndentedJSON(400, nil)
 	}
 	// レスポンス
 	c.IndentedJSON(http.StatusOK, books)
