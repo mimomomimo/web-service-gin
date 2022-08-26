@@ -2,16 +2,20 @@ package controller
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mimomomimo/web-service-gin/app/repository"
+	"github.com/mimomomimo/web-service-gin/app/model"
 )
 
+type RepositoryInterface interface {
+	FetchVolumes(url.Values) ([]model.Book, error)
+}
 type Controller struct {
-	Repositry repository.GoogleBooksRepositry
+	Repositry RepositoryInterface
 }
 
-func NewController(r repository.GoogleBooksRepositry) Controller {
+func NewController(r RepositoryInterface) Controller {
 	return Controller{
 		Repositry: r,
 	}

@@ -20,7 +20,8 @@ type Item struct {
 }
 
 type VolumeInfo struct {
-	Title string `json:"title"`
+	Title   string   `json:"title"`
+	Authors []string `json:"authors"`
 }
 
 type GoogleBooksRepositry struct {
@@ -58,8 +59,9 @@ func (volumes *Volumes) toBooks() []model.Book {
 	var books []model.Book
 	for _, v := range volumes.Items {
 		book := model.Book{
-			ID:    v.ID,
-			Title: v.VolumeInfo.Title,
+			ID:      v.ID,
+			Title:   v.VolumeInfo.Title,
+			Authors: v.VolumeInfo.Authors,
 		}
 		books = append(books, book)
 	}
